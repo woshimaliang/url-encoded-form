@@ -41,8 +41,10 @@ final class URLEncodedFormSerializer {
 
     /// Serializes a `[URLEncodedFormData]` at a given key.
     private func serialize(_ array: [URLEncodedFormData], forKey key: Data) throws -> Data {
+        var i:UInt8 = 0
         let collection = try array.map { value -> Data in
-            let keyPath = key + [.leftSquareBracket, .rightSquareBracket]
+            let keyPath = key + [.leftSquareBracket, i+Character("0").asciiValue!, .rightSquareBracket]
+            i = i+1
             return try serialize(value, forKey: keyPath)
         }
 
